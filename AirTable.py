@@ -1,12 +1,3 @@
-'''
-by Maddie Pero 
-
-In this example we will get data from Airtable.
-'''
-
-'''
-These statements allow us to make get requests of the Airtable API & parse that information
-'''
 import sys 
 import rclpy
 from rclpy.node import Node
