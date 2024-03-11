@@ -7,10 +7,6 @@ import json
 import time
 from geometry_msgs.msg import Twist
 
-'''
-These statements import iRobot Create®3 messages and actions.
-'''
-
 class RobotMotion():
     def __init__(self):
         print("Motion initialized")
@@ -53,29 +49,12 @@ class MotionPublisher(Node):
         except: 
             linear_x = 0
             angular_z = 0
-
-
-        # if type(linear_x) is not float:
-        #     linear_x = 0
-        
-        # if type(angular_z) is not float:
-        #     angular_z = 0
-
+            
         msg.linear.x = linear_x
         msg.angular.z = angular_z
         
-        # if (new_rotation != self.previous_rotation) or (new_translation != self.previous_translational):
-        #     print("New Values- Rotation: ", new_rotation, " Translation: ", new_translation)
-        # else:
-        #     print("No change")
-
-        # self.previous_rotation = new_rotation
-        # self.previous_translational = new_translation
         self.motion_publisher.publish(msg) 
     def reset(self):
-        '''
-        This function releases contriol of the lights and "gives" it back to the robot. 
-        '''
         print('Resetting motion')
 
         
@@ -83,20 +62,13 @@ class MotionPublisher(Node):
 
 
 ''' This function makes a get request to the airtable API which will tell us how fast to spin the wheels'''
-
-''' Put the URL for your Airtable Base here'''
 ''' Format: 'https://api.airtable.com/v0/BaseID/tableName '''
 URL = 'https://api.airtable.com/v0/applK0NRaebYim73c/Control_Table'
 
 
 ''' Format: {'Authorization':'Bearer Access_Token'}
-Note that you need to leave "Bearer" before the access token '''
 Headers = {'Authorization':'Bearer patdq1umq6dz00Wjg.1fa65436b75bc5e22d7d04d39029973f64a8cc0c2057984e84e58a1947f50132'}
 
-
-'''
-The get request data comes in as a json package. We will convert this json package to a python dictionary so that it can be parsed
-'''
 
 def main(args = None):
     rclpy.init(args=args)
@@ -112,18 +84,6 @@ def main(args = None):
         motion.destroy_node()
         print('shutting down')
         rclpy.shutdown()
-
-# while True:
-#     r = requests.get(url = URL, headers = Headers, params = {})
-#     data = r.json()
-#     new_rotation = data['records'][1]['fields']['Value']
-#     new_translation = data['records'][2]['fields']['Value']
-#     if (new_rotation != previous_rotation) or (new_translation != previous_translation):
-#         print("New Values- Rotation: ", new_rotation, " Translation: ", new_translation)
-#     else:
-#         print("No change")
-#     previous_rotation =  new_rotation
-#     previous_translation =  new_translation
 
 if __name__ == '__main__':
     main()
